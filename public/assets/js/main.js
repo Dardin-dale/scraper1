@@ -23,13 +23,10 @@ $(function() {
         });
     })
 
-    // //opens Note modal
-    // $('.note').on('click',  function() {
-    //     $.get("/comments/" +$(this).attr('data-id'))
-    //     .then(function(data){
-    //         console.log('data', data);
-    //     });
-    // })
+    //opens Note modal
+    $('.note').on('click',  function() {
+        $("#modal"+$(this).attr('data-id')).modal('toggle');
+    })
 
 
 })
