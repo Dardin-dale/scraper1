@@ -16,17 +16,27 @@ router.get("/scrape", function(req, res) {
       var $ = cheerio.load(response.data);
   
       // Now, we grab every h2 within an article tag, and do the following:
-      $(".title").each(function(i, element) {
+      $("article").each(function(i, element) {
         // Save an empty result object
         var result = {};
   
         // Add the text and href of every link
         result.title = $(this)
+          .children(".item-info")
+          .children(".title")
           .children("a")
           .text();
         result.link = $(this)
+          .children(".item-info")
+          .children(".title")
           .children("a")
           .attr("href");
+
+        result.summary = $(this)
+          .children(".item-info")
+          .children(".teaser")
+          .children("a")
+          .text();
   
         // only add Article if not found in the database
         db.Article.find({title: result.title})
@@ -55,20 +65,18 @@ router.post("/articles/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
   db.Note.create(req.body)
       .then(function(dbNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`
+      // If a Note was created successfully
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
       })
       .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
-      res.json(dbArticle);
+        res.json(dbArticle);
       })
       .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
+        res.json(err);
       });
 });
 
-// Route for saving/updating an Article's associated Note
+// Route for deleteing Article from collection
 router.delete("/articles/:id", function(req, res) {
   // Destroys entry from database
   db.Article.remove({_id : req.params.id})
