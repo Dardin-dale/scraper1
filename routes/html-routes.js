@@ -8,12 +8,10 @@ var db = require("../models");
 
 // Create home route and serve db data
 router.get("/", function(req, res) {
-  db.Article.find(function(data) {
-    var hbsObject = {
-      articles: data
-    };
-    console.log(hbsObject);
-    res.render("index", hbsObject);
+  db.Article.find({})
+  .then(function(dbArticle) {
+    var articles = {article : dbArticle}
+    res.render('index', articles);
   })
 });
 

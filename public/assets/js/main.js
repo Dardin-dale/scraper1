@@ -7,9 +7,7 @@ $(document).on('ready', function () {
             url: "/scrape"
         }).then(function(data){
             alert("Entries Added: "+ data.length);
-        }).catch(function(err) {
-            console.log(err);
-        })
+        });
     })
 
 
