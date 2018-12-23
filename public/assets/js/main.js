@@ -1,4 +1,4 @@
-$(document).on('ready', function () {
+$(function() {
 
     //Scrapes NPR Science page and populates the database.
     $('#scrape').on('click', function() {
@@ -13,6 +13,7 @@ $(document).on('ready', function () {
 
     //removes entry from database
     $('.delete').on('click', function() {
+        console.log('sane');
         $.ajax({
             type: 'DELETE',
             url: "/articles/"+ $(this).attr('data-id')
@@ -22,10 +23,13 @@ $(document).on('ready', function () {
         });
     })
 
-    //opens Note modal
-    $('.note').on('click', function() {
-        
-    })
+    // //opens Note modal
+    // $('.note').on('click',  function() {
+    //     $.get("/comments/" +$(this).attr('data-id'))
+    //     .then(function(data){
+    //         console.log('data', data);
+    //     });
+    // })
 
 
 })

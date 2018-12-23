@@ -60,26 +60,26 @@ router.get("/scrape", function(req, res) {
     });
 });
   
-// Route for saving/updating an Article's associated Note
-router.post("/articles/:id", function(req, res) {
+// Route for saving/updating an Article's comments
+router.post("/comment/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
-  db.Note.create(req.body)
-      .then(function(dbNote) {
-      // If a Note was created successfully
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-      })
-      .then(function(dbArticle) {
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        res.json(err);
-      });
+  db.Article.findOneAndUpdate({})
 });
 
 // Route for deleteing Article from collection
 router.delete("/articles/:id", function(req, res) {
   // Destroys entry from database
   db.Article.remove({_id : req.params.id})
+  .then(function(data) {
+    console.log('deleted', data);
+    res.json(data);
+  });
+});
+
+// Route for deleteing comment from Article
+router.delete("/comments/:id/:comment", function(req, res) {
+  // Destroys entry from database
+  db.Article.update({_id : req.params.id})
   .then(function(data) {
     console.log('deleted', data);
     res.json(data);

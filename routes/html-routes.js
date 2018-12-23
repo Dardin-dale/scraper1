@@ -31,13 +31,11 @@ router.get("/articles", function(req, res) {
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
-router.get("/articles/:id", function(req, res) {
+router.get("/comments/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
-      //populate notes associated with the article
-      .populate("note")
       .then(function(dbArticle) {
         // If we were able to successfully find an Article with the given id, send it back to the client
-        res.json(dbArticle);
+        res.render('comments', dbArticle);
       })
       .catch(function(err) {
         // If an error occurred, send it to the client
