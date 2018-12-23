@@ -16,7 +16,7 @@ router.get("/scrape", function(req, res) {
       var $ = cheerio.load(response.data);
   
       // Now, we grab every h2 within an article tag, and do the following:
-      $("article").each(function(i, element) {
+      $(".item").each(function(i, element) {
         // Save an empty result object
         var result = {};
   
@@ -37,7 +37,7 @@ router.get("/scrape", function(req, res) {
           .children(".teaser")
           .children("a")
           .text();
-  
+
         // only add Article if not found in the database
         db.Article.find({title: result.title})
         .then(function(dbArticle) {
