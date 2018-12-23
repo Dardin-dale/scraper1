@@ -10,7 +10,8 @@ var db = require("../models");
 router.get("/", function(req, res) {
   db.Article.find({})
   .then(function(dbArticle) {
-    var articles = {article : dbArticle}
+    //show newest articles first
+    var articles = {article : dbArticle.reverse()}
     res.render('index', articles);
   })
 });

@@ -20,7 +20,7 @@ router.get("/scrape", function(req, res) {
         // Save an empty result object
         var result = {};
   
-        // Add the text and href of every link, and save them as properties of the result object
+        // Add the text and href of every link
         result.title = $(this)
           .children("a")
           .text();
@@ -28,16 +28,24 @@ router.get("/scrape", function(req, res) {
           .children("a")
           .attr("href");
   
-        // Create a new Article using the `result` object built from scraping
-        db.Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle);
-          })
-          .catch(function(err) {
-            // If an error occurred, log it
-            console.log(err);
-          });
+        // only add Article if not found in the database
+        db.Article.find({title: result.title})
+        .then(function(dbArticle) {
+          if(dbArticle.length === 0) {
+            // Create a new Article using the `result` object built from scraping
+            db.Article.create(result)
+            .then(function(dbArticle) {
+              // View the added result in the console
+              console.log(dbArticle);
+              res.end();
+            })
+            .catch(function(err) {
+              // If an error occurred, log it
+              console.log(err);
+            });
+          }
+        });
+       
       });
     });
 });
@@ -59,5 +67,16 @@ router.post("/articles/:id", function(req, res) {
       res.json(err);
       });
 });
+
+// Route for saving/updating an Article's associated Note
+router.delete("/articles/:id", function(req, res) {
+  // Destroys entry from database
+  db.Article.remove({_id : req.params.id})
+  .then(function(data) {
+    console.log('deleted', data);
+    res.json(data);
+  });
+});
+
 
 module.exports = router;

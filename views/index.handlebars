@@ -1,12 +1,11 @@
 <h2>NPR Science Page</h2>
 
 <button class="btn btn-success" id="scrape">Scrape New Articles!</button>
+<br>
 
-<ul>
-  {{#each article}}
-      {{> article-block}}
-  {{/each}}
-</ul>
+{{#each article}}
+    {{> article-block}}
+{{/each}}
 
 
 <script src="/assets/js/main.js"></script>

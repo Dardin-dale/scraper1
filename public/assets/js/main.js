@@ -6,8 +6,25 @@ $(document).on('ready', function () {
             type: 'GET',
             url: "/scrape"
         }).then(function(data){
-            alert("Entries Added: "+ data.length);
+            alert("Entries Added");
+            location.reload();
         });
+    });
+
+    //removes entry from database
+    $('.delete').on('click', function() {
+        $.ajax({
+            type: 'DELETE',
+            url: "/articles/"+ $(this).attr('data-id')
+        }).then(function(data){
+            alert("Entry Deleted");
+            location.reload();
+        });
+    })
+
+    //opens Note modal
+    $('.note').on('click', function() {
+        
     })
 
 
