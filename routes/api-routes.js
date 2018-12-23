@@ -62,8 +62,12 @@ router.get("/scrape", function(req, res) {
   
 // Route for saving/updating an Article's comments
 router.post("/comment/:id", function(req, res) {
-  // Create a new note and pass the req.body to the entry
-  db.Article.findOneAndUpdate({})
+  // Create a new note and pass the req.body to the comments
+  console.log("post", req.body);
+  db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {comments: req.body}})
+  .then(function(data){
+    res.json(data);
+  });
 });
 
 // Route for deleteing Article from collection

@@ -26,7 +26,21 @@ $(function() {
     //opens Note modal
     $('.note').on('click',  function() {
         $("#modal"+$(this).attr('data-id')).modal('toggle');
-    })
+    });
 
+    //adds comment to article
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "/comment/" + $(this).attr('data-id'),
+            data: {
+                   user:$('input').val(),
+                   body:$('textarea').val()
+                  }
+        }).then(function(data) {
+            location.reload();
+        });
+    })
 
 })

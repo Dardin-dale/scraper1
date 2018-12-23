@@ -25,14 +25,14 @@
                 {{/each}}
             </div>
 
-            <form>
+            <form data-id="{{_id}}">
                 <div class="form-group">
-                    <label for="user">Username</label>
-                    <input type="text" class="form-control" id="user" placeholder="Anon">
+                    <label>Username</label>
+                    <input type="text" class="form-control user" placeholder="Anon">
                 </div>
                 <div class="form-group">
                     <label for="comment">Comment</label>
-                    <textarea class="form-control" id="comment" rows="3"></textarea>
+                    <textarea class="form-control comment" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary add">Add Comment</button>
             </form>
