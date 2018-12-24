@@ -41,6 +41,19 @@ $(function() {
         }).then(function(data) {
             location.reload();
         });
+    });
+
+    //deletes comment from article
+    $(".delcomment").on('click', function() {
+        var id = $(this).attr('data-id');
+        var index = $(this).attr('data-index');
+        console.log('Delete', id, index);
+        $.ajax({
+            type: 'DELETE',
+            url:'/comments/'+ id +'/'+ index
+        }).then(function(data){
+            location.reload();
+        })
     })
 
 })

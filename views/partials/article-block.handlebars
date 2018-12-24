@@ -21,7 +21,7 @@
             <div style="height:200px;overflow:auto;">
                 {{#each comments}}
                     <p>{{user}}: {{body}}</p>
-                    <button class="btn delcomment" data-id="{{_id}}">X</button>
+                    <button class="btn delcomment" data-id="{{../_id}}" data-index="{{[_id]}}">X</button>
                 {{/each}}
             </div>
 

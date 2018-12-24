@@ -81,9 +81,9 @@ router.delete("/articles/:id", function(req, res) {
 });
 
 // Route for deleteing comment from Article
-router.delete("/comments/:id/:comment", function(req, res) {
+router.delete("/comments/:id/:index", function(req, res) {
   // Destroys entry from database
-  db.Article.update({_id : req.params.id})
+  db.Article.findOneAndUpdate({_id : req.params.id}, {$pull: {comments: {_id: req.params.index}}})
   .then(function(data) {
     console.log('deleted', data);
     res.json(data);
